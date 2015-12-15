@@ -62,10 +62,10 @@ hi!	link	Float	Number
 hi!	link	Boolean	Number
 
 hi	Gutter	gui=NONE	guifg=Black	guibg=Grey
-hi	LineNr	gui=NONE	guifg=White	guibg=#C0C8D0
+hi	LineNr	gui=NONE	guifg=#434F55	guibg=#22272A
 hi	MatchParen	gui=NONE	guifg=Black	guibg=Yellow
 hi	More	gui=bold	guifg=#208040	guibg=NONE
-hi	NonText	gui=bold	guifg=White	guibg=#C0C8D0
+hi	NonText	gui=NONE	guifg=#434F55	guibg=#161A1C
 hi	PreProc	gui=bold	guifg=#708090	guibg=NONE
 hi	Question	gui=NONE	guifg=#208040	guibg=NONE
 hi	shShellVariables	gui=NONE	guifg=#304065	guibg=NONE
