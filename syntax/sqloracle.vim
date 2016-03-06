@@ -17,15 +17,17 @@ syn case ignore
 " \h = head of word character [A-Za-z_]
 syn match	sqlIdentifier	"\<\h[a-z0-9_#$]*\>"
 
-" Variables (&substitution; :host/bind):
-syn match	sqlVariable	"\v\&{1,2}[a-z0-9_#$]+\.?"
-syn match	sqlVariable	/\v<:[a-z][a-z0-9_#$]*/
+" Variables (&substitution; :bind):
+syn match	sqlSubstVar	"\v\&{1,2}[a-z0-9_#$]+\.?"
+syn match	plsqlBind	":[a-z][a-z0-9_#$]*"
+syn match	plsqlQuotedBind	":[a-z0-9_#$]*\ze\(\s\|'$\)" contained
+" syn match	notVariable	":mi\>"
 
 syn match	sqlOperator	"[*<>=]"
 syn match	sqlOperator	"||"
 syn match	sqlOperator	"\*"
 syn match	sqlOperator	"[!^:]="
-syn keyword	sqlOperator	connect_by_root empty escape exists intersect minus present prior
+syn keyword	sqlOperator	connect_by_root empty escape intersect minus present prior
 syn match	sqlOperator	"\v<union(\s+all)?>"
 syn match	sqlOperator	"\v<multiset\s+(except|intersect)>"
 syn match	sqlOperator	"\<a\s\+set\>"
@@ -40,7 +42,7 @@ syn match	sqlStatement	/\<set\s\+transaction\>/
 " Types (include full definition e.g. INTERVAL DAY(3) TO SECOND(3) so displays as one colour)
 " syn keyword	sqlType	bfile binary_double binary_float blob clob date dec decimal dsinterval_unconstrained float identity integer
 syn keyword	sqlType	blob clob date dec decimal dsinterval_unconstrained float identity integer long
-syn keyword	sqlType	nchar nclob nvarchar2 numeric raw real refcursor smallint varray xmltype
+syn keyword	sqlType	nchar nclob nvarchar2 numeric raw real record refcursor smallint varray xmltype
 syn match	sqlType	"\v<interval\s+(day|hour)\s*(\([0-9]+\))?\s+to\s+(minute|second)>\s*(\([0-9]+\))?"
 syn match	sqlType	"\v<binary_(double|float|integer)"
 syn match	sqlType	"\v<interval\s+year\s*(\([0-9]+\))?\s+to\s+month>\s*(\([0-9]+\))?"
@@ -48,13 +50,13 @@ syn match	sqlType	"\<double\s\+precision\>"
 syn match	sqlType	"\v<number>\s*(\(\s*[0-9]+\s*(,\s*[0-9]+)?\))?"
 syn match	sqlType	"\v<timestamp\s*((\s*[0-9]+\s*))?(\s+with(\s+local)?\s+time\s+zone>)?"
 syn match	sqlType	"\v<timestamp\s+with(\s+local)?\s+time\s+zone>"
-syn match	sqlType	"\v<varchar2?>\s*(\(\s*[0-9]+\s*(byte|char)?\s*\))?"
+syn match	sqlType	"\v<varchar2\s*(\(\s*[0-9]+\s*(byte|char)?\s*\))?"
 
 " SQL keywords:
 syn keyword	sqlKeyword	add aggregate all and any apply as[c] authid authorization between body by cascade case check checkpoint cluster collate column compress
 syn keyword	sqlKeyword	compute connect constraint constructor context cross current database deallocate default definer
 syn keyword	sqlKeyword	deleting deny desc deterministic dimension disk distinct distributed dummy editionable else elsif end errlvl escape exceptions
-syn keyword	sqlKeyword	execute exists xxexternal file final follows for from full function group hash hashkeys having heap identified in index initrans inner inserting instantiable intersect
+syn keyword	sqlKeyword	execute exists external file final follows for from full function group hash hashkeys having heap identified in index initrans inner inserting instantiable intersect
 syn keyword	sqlKeyword	into is java join left limit list load local location logging map match matched maxtrans measures member model nocompress nocopy nocycle nologging noneditionable noparallel not
 syn keyword	sqlKeyword	nowait null object of on opaque open operator or order xxorganization out outer over overriding package parallel parallel_enable partition pipe pipelined pivot plan policy precedes
 syn keyword	sqlKeyword	print procedure public range records reject references restrict result result_cache return returning right row[s] save schema self sequence sequential session session_user
@@ -63,7 +65,7 @@ syn keyword	sqlKeyword	updating upsert use using values view when where with wit
 
 syn match	sqlKeyword	"\<a\s\+set\>"
 " syn match	sqlKeyword	"\<access\s\+parameters\>"
-syn match	sqlKeyword	"\<fields\s\+terminated\>"
+" syn match	sqlKeyword	"\<fields\s\+terminated\>"
 syn match	sqlKeyword	"\v<like[24c]?>"
 syn match	sqlKeyword	"\v<nulls (fir|la)st>"
 syn match	sqlKeyword	"\v<pct(free|used)>"
@@ -83,14 +85,15 @@ syn match	sqlKeyword	"\v<(primary|foreign)\s+key>"
 syn match	sqlKeyword	"[;.,()@\-+]"
 
 " PL/SQL-specific keywords
-syn keyword	plsqlKeyword	authid authorization begin break close constructor continue current declare deleting
-syn keyword	plsqlKeyword	exception exit fetch forall goto if inserting loop map match matched nocopy opaque open pipelined raise
+syn keyword	plsqlKeyword	authid authorization begin break close constructor continue current cursor declare deleting
+syn keyword	plsqlKeyword	exit fetch forall goto if inserting loop map match matched nocopy opaque open pipelined raise
 syn keyword	plsqlKeyword	raise_application_error read record result result_cache returning row rows save self sqlcode sqlerrm static subtype sys_refcursor updating while 
 syn keyword	plsqlKeyword	%isopen %found %notfound %rowcount
 syn match	plsqlKeyword	"\<bulk\s\?collect\>"
+syn match	plsqlKeyword	"\<exception\(\s*;\)\@!"
 syn match	plsqlKeyword	"\<execute\s\?immediate\>"
 syn match	plsqlKeyword	"\<pipe\s\?row\>"
-syn match	plsqlkeyword	"%\(BULK_EXCEPTIONS\|BULK_ROWCOUNT\|ISOPEN\|FOUND\|NOTFOUND\|ROWCOUNT\)\>"
+syn match	plsqlkeyword	"%\(bulk_exceptions\|bulk_rowcount\|isopen\|found\|notfound\|rowcount\)\>"
 
 syn match	plsqlKeyword	"\.count\>"
 syn match	plsqlKeyword	"\.delete\>"
@@ -114,7 +117,7 @@ syn keyword	plsqlException	login_denied no_data_found no_data_needed not_logged_
 syn keyword	plsqlException	subscript_beyond_count subscript_outside_limit sys_invalid_rowid timeout_on_resource too_many_rows value_error zero_divide
 
 " Other PL/SQL:
-syn keyword	plsqlBooleanLiteral	TRUE FALSE
+syn keyword	plsqlBoolean	TRUE FALSE
 syn match	plsqlLabel	"<<\s*\h\S\+\s*>>"
 
 " PL/SQL-specific types:
@@ -123,6 +126,7 @@ syn keyword	plsqlType	real signtype simple_integer string sys_refcursor timestam
 syn match	plsqlType	"\<ref\s\+cursor\>"
 syn match	plsqlType	"\<[a-z][a-z0-9_#$]*%\(row\)\?type\>"
 syn match	plsqlType	"\<[a-z][a-z0-9_#$]*\.[a-z][a-z0-9_#$]*%\(row\)\?type\>"
+syn match	plsqlType	"\<exception\(\s*;\)\@="
 
 syn keyword	plsqlPragma	pragma autonomous_transaction exception_init inline restrict_references serially_reusable udf
 syn match	plsqlPreproc	"$$PLSCOPE_SETTINGS\>"
@@ -158,7 +162,7 @@ syn keyword	sqlFunction	stats_f_test stats_ks_test stats_mode stats_mw_test stat
 syn keyword	sqlFunction	tan tanh timestamp_to_scn
 " syn keyword	sqlFunction	to_binary_double to_binary_float to_blob to_char to_clob to_date to_dsinterval to_lob to_multi_byte to_nchar to_nclob to_number to_single_byte
 " syn keyword	sqlFunction	to_timestamp to_timestamp_tz to_yminterval
-syn keyword	sqlFunction	translate treat trim trunc tz_offset uid unistr updatexml xupper user userenv var_pop var_samp variance vsize width_bucket
+syn keyword	sqlFunction	translate treat trim trunc tz_offset uid unistr updatexml upper user userenv var_pop var_samp variance vsize width_bucket
 " syn keyword	sqlFunction	xmlagg xmlcast xmlcdata xmlcolattval xmlcomment xmlconcat xmldiff xmlelement xmlexists xmlforest xmlisvalid xmlparse xmlpatch xmlpi
 " syn keyword	sqlFunction	xmlquery xmlroot xmlsequence xmlserialize xmltable xmltransform
 
@@ -175,7 +179,7 @@ syn match	sqlFunction	"\v<regexp_(count|instr|replace|substr)>"
 syn match	sqlFunction	"\v<regr_(avgx|avgy|count|intercept|r2|slope|sxy|syy)>"
 syn match	sqlFunction	"\v<sys_(context|dburigen|extract_utc|guid|op_zone_id|typeid|xml(agg|gen))>"
 syn match	sqlFunction	"\v<to_(binary_double|binary_float|blob|char|clob|date|dsinterval|lob|multi_byte|nchar|nclob|number|single_byte|timestamp|timestamp_tz|yminterval)>"
-syn match	sqlFunction	"\v<xml(agg|cast|cdata|colattval|comment|concat|diff|element|exists|forest|isvalid|parse|patch|pi|query|root|sequence|serialize|table|transform)>"
+syn match	sqlFunction	"\v<xml(agg|cast|cdata|colattval|comment|concat|diff|element|forest|isvalid|parse|patch|pi|query|root|sequence|serialize|table|transform)>"
 syn match	sqlFunction	"\v<(in|sub)str[24bc]?>"
 
 " Pseudocolumns
@@ -187,22 +191,23 @@ syn match	sqlpseudo	"\.nextval\>"
 
 " Character literals and quoted identifiers
 " (offset can be used here to exclude quote characters from highlighting: hs/he=highlighting start/end, e.g. start=+'+hs=s+1 end=+'+he=e-1)
-" TODO: not sure whether or not it's a good idea to have sqlString contain sqlVariable, e.g. to_char(sysdate,'HH24:MI:SS') highlights :MI and :SS as binds.
+" Quoted strings can contain :binds and &substitutions - thanks to Kent on Stack Overflow for help excluding 'HH24:MI:SS' from bind variable highlighting.
+" http://stackoverflow.com/questions/34140817/vim-syntax-highlighting-exclude-specific-text-from-a-pattern
 syn region	sqlQuotedId	start=+"+ end=+"+
-syn region	sqlString	start=+'+ end=+'+ contains=sqlVariable
-syn region	sqlString	start=+n'+ end=+'+ contains=sqlVariable
+syn region	sqlString	start=+'+ end=+'+ contains=plsqlQuotedBind,sqlSubstVar
+syn region	sqlString	start=+n'+ end=+'+ contains=plsqlQuotedBind,sqlSubstVar
 " Q-quotes (most likely variants):
 "    https://docs.oracle.com/database/121/SQLRF/sql_elements003.htm#SQLRF00220:
 "    quote_delimiter is any single- or multibyte character except space, tab, and return.
-syn region	sqlString	start=+n\?q'\[+  end=+\]'+ contains=sqlVariable
-syn region	sqlString	start=+n\?q'<+  end=+>'+ contains=sqlVariable
-syn region	sqlString	start=+n\?q'{+  end=+}'+ contains=sqlVariable
-syn region	sqlString	start=+n\?q'(+  end=+)'+ contains=sqlVariable
+syn region	sqlString	start=+n\?q'\[+  end=+\]'+ contains=plsqlQuotedBind,sqlSubstVar
+syn region	sqlString	start=+n\?q'<+  end=+>'+ contains=plsqlQuotedBind,sqlSubstVar
+syn region	sqlString	start=+n\?q'{+  end=+}'+ contains=plsqlQuotedBind,sqlSubstVar
+syn region	sqlString	start=+n\?q'(+  end=+)'+ contains=plsqlQuotedBind,sqlSubstVar
 " Can use \z(pattern\) backreference when same symbol is used for start and and e.g. q'! ... !'
-syn region	sqlString	start="n\?q'\z([\*!?$%^":~]\)"  end="\z1'" contains=sqlVariable
+syn region	sqlString	start="n\?q'\z([\*!?$%^":~]\)"  end="\z1'" contains=plsqlQuotedBind,sqlSubstVar
 
 " SQL*Plus prompts
-syn region	sqlString	matchgroup=sqlKeyword start=+\v^\s*pro(mpt)?>+ end=+$+ contains=sqlVariable oneline
+syn region	sqlString	matchgroup=sqlKeyword start=+\v^\s*pro(mpt)?>+ end=+$+ contains=sqlSubstVar oneline
 
 " Numbers - allows trailing d or f (double/float), and exponents e.g. 1e6
 " WR 2015
@@ -211,23 +216,22 @@ syn match	sqlNumber	"\v<[0-9]*\.?[0-9]+(e[-+]?[0-9]+|[df])?>"
 
 " Comments - note '\' is not an escape character in SQL
 syn region	sqlComment	start="/\*"  end="\*/" contains=Todo
-syn match	sqlComment	"--.*$" contains=Todo
-" Old style SQL*Plus comment:
-syn match	sqlComment	/\v^\s*rem(a(rk?)?)?>.*$/
+syn match	sqlComment	/--.*$/ contains=Todo
+syn match	sqlComment	/^\s*REM.*$/ contains=Todo
 syn sync ccomment sqlComment
 
 " Make these TODO so they stand out as needing review:
-" (Could include LONG as superceded by LOB, but PL/SQL's unrelated LONG type is fine)
+" (Could include LONG as superceded by LOB, but rule would incorrectly highlight PL/SQL's unrelated LONG type.)
 syn keyword	sqlTodo	natural analyze
-syn match	sqlTodo	/\v<char>\s*(\(.*\))?/
-syn match	sqlTodo	/\v<varchar>\s*(\(.*\))?/
-syn match	sqlTodo	/\v<nvarchar>\s*(\(.*\))?/
+syn match	sqlTodo	/\v<char>\s*(\([0-9]*\))?/
+syn match	sqlTodo	/\v<varchar>\s*(\([0-9]*\))?/
+syn match	sqlTodo	/\v<nvarchar>\s*(\([0-9]*\))?/
 
 " Standard Todo.
 syn keyword	Todo	TODO FIXME DEBUG NOTE
 
 " Special rules for external tables (CHAR is standard not TODO, various other keywords only valid here)
-" (Experimental. Doesn't work.)
+" (Doesn't work.)
 syn match	sqlXTType	contained /\v<char>\s*(\(\s*[0-9]*\s*\))?/
 syn match	sqlXTType	contained /\v<raw>\s*(\(\s*[0-9]*\s*\))?/
 syn match	sqlXTType	contained /\v<integer(\s*external)?>\s*(\(\s*[0-9]*\s*\))?/
@@ -235,7 +239,7 @@ syn match	sqlXTType	contained /\v<unsigned\s+integer(\s*external)?>\s*(\(\s*[0-9
 syn match	sqlXTType	contained "\v<var(char|raw)c?>\s*(\(\s*[0-9]+\s*(,\s*[0-9]+)?\))?"
 syn keyword	sqlXTType	contained big endian binary_float binary_double counted csv date_format date decimal double embedded float int integer little mask oracle_date oracle_loader oracle_number unsigned zoned
 syn keyword	sqlXTKeyword	contained access are blanks data delimited directory dnfs_enable dnfs_readbuffers enclosed end field[s] length lrtrim ldrtrim location missing newline notrim nullif optionally override reject parameters position start terminated whitespace
-syn region	sqlXTParams	transparent matchgroup=sqlKeyword start=+\<organization\s\+external\>+ end=+)+ contains=sqlXTTYPE,sqlXTKeyword,Todo
+syn region	sqlXTParams	transparent matchgroup=sqlKeyword start=+\<organization\s\+external\>+ end=+)+ contains=sqlXTType,sqlXTKeyword
 
 " Whitespace (display depends on c_show_tabs and c_space_errors set in vimrc, and colour scheme for actual highlighting):
 syn match	sqlTrailingSpace	" \+$"
@@ -258,41 +262,54 @@ endif
 " Syntax Synchronizing
 syn sync minlines=10 maxlines=100
 
-command -nargs=+ HiLink hi def link <args>
+" command -nargs=+ hi def link hi def link <args>
 
 " Assign plain tab first, in case reclassified as an error later according to c_space_errors:
-HiLink sqlTab	Tab
+hi def link sqlTab	Tab
 
-HiLink plsqlKeyword	sqlKeyword
-HiLink sqlKeyword	sqlStatement
-HiLink sqlOperator	sqlStatement
-HiLink sqlPseudo	sqlFunction
+hi def link plsqlKeyword	sqlKeyword
+hi def link sqlKeyword	sqlStatement
+hi def link sqlOperator	sqlStatement
+hi def link sqlPseudo	sqlFunction
 
-HiLink sqlComment	Comment
-HiLink sqlFunction	Function
-HiLink sqlIdentifier	Identifier
-HiLink sqlNumber	Number
-HiLink sqlQuotedId	Special
-HiLink sqlStatement	Statement
-HiLink sqlString	String
-HiLink sqlTodo	Todo
-HiLink sqlType	Type
-HiLink sqlXTType	sqlType
-HiLink sqlXTKeyword	sqlKeyword
-HiLink sqlVariable	Special
+hi def link sqlSubstVar	sqlVariable
+hi def link plsqlBind	sqlVariable
+hi def link plsqlQuotedBind	sqlVariable
+hi def link plsqlBoolean	Boolean
+hi def link plsqlException	Exception
+hi def link plsqlLabel	Title
+hi def link plsqlParenError	Error
+hi def link plsqlPragma	Special
+hi def link plsqlpreproc	PreProc
+hi def link plsqlTrigger	Keyword
+hi def link plsqlType	sqlType
+hi def link sqlComment	Comment
+hi def link sqlFunction	Function
+hi def link sqlIdentifier	Identifier
+hi def link sqlNumber	Number
+hi def link sqlQuotedId	Special
+hi def link sqlStatement	Statement
+hi def link sqlString	String
+hi def link sqlTodo	Todo
+hi def link sqlType	Type
+hi def link sqlVariable	Special
 
-HiLink plsqlBooleanLiteral	Boolean
-HiLink plsqlException	Exception
-HiLink plsqlLabel	Title
-HiLink plsqlParenError	Error
-HiLink plsqlPragma	Special
-HiLink plsqlpreproc	PreProc
-HiLink plsqlTrigger	Keyword
-HiLink plsqlType	sqlType
+hi def link sqlXTKeyword	Keyword
+hi def link sqlXTType	Type
 
-delcommand HiLink
 
 let b:current_syntax = "sql"
 
+"" -- Self-test - :so % (revert with :set ft=vim)
+if 0
+    create or replace package
+    varchar2
+    x varchar2(19) := to_char(sysdate,'YYYY-MM-DD HH24:MI:SS');
+    varchar
+    char
+    create table x
+    ( y char(1) );
+    :x := 'select * from foo where a= :a1 and b= :b1 and c = :ss'
+endif
 " Enormous tab size for column-formatted lists:
 " vim:ts=28
