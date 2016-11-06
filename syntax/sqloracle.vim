@@ -53,10 +53,10 @@ syn match	sqlType	"\v<timestamp\s+with(\s+local)?\s+time\s+zone>"
 syn match	sqlType	"\v<varchar2\s*(\(\s*[0-9]+\s*(byte|char)?\s*\))?"
 
 " SQL keywords:
-syn keyword	sqlKeyword	add aggregate all and any apply as[c] authid authorization between body by cascade case check checkpoint cluster collate column compress
+syn keyword	sqlKeyword	add aggregate all and any apply as[c] authid authorization between body by call cascade case check checkpoint cluster collate column compress
 syn keyword	sqlKeyword	compute connect constraint constructor context cross current database deallocate default definer
 syn keyword	sqlKeyword	deleting deny desc deterministic dimension disk distinct distributed dummy editionable else elsif end errlvl escape exceptions
-syn keyword	sqlKeyword	execute exists external file final follows for from full function group hash hashkeys having heap identified in index initrans inner inserting instantiable intersect
+syn keyword	sqlKeyword	exists external file final follows for from full function group hash hashkeys having heap identified in index initrans inner inserting instantiable intersect
 syn keyword	sqlKeyword	into is java join left limit list load local location logging map match matched maxtrans measures member model nocompress nocopy nocycle nologging noneditionable noparallel not
 syn keyword	sqlKeyword	nowait null object of on opaque open operator or order xxorganization out outer over overriding package parallel parallel_enable partition pipe pipelined pivot plan policy precedes
 syn keyword	sqlKeyword	print procedure public range records reject references restrict result result_cache return returning right row[s] save schema self sequence sequential session session_user
@@ -310,6 +310,9 @@ if 0
     create table x
     ( y char(1) );
     :x := 'select * from foo where a= :a1 and b= :b1 and c = :ss'
+   exec
+   execute immediate
 endif
+
 " Enormous tab size for column-formatted lists:
 " vim:ts=28
