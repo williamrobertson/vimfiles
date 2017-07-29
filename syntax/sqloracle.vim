@@ -90,7 +90,7 @@ syn keyword	plsqlKeyword	exit fetch forall goto if inserting loop map match matc
 syn keyword	plsqlKeyword	raise_application_error read record result result_cache returning row rows save self sqlcode sqlerrm static subtype sys_refcursor updating while 
 syn keyword	plsqlKeyword	%isopen %found %notfound %rowcount
 syn match	plsqlKeyword	"\<bulk\s\?collect\>"
-syn match	plsqlKeyword	"\<exception\(\s*;\)\@!"
+syn match	plsqlKeyword	"\<exception\>\(\s*;\)\@!"
 syn match	plsqlKeyword	"\<execute\s\?immediate\>"
 syn match	plsqlKeyword	"\<pipe\s\?row\>"
 syn match	plsqlkeyword	"%\(bulk_exceptions\|bulk_rowcount\|isopen\|found\|notfound\|rowcount\)\>"
