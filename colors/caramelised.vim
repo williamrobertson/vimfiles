@@ -35,7 +35,7 @@ hi!	link	Error	Tab
 hi	Normal	gui=NONE	guifg=#dab0a4	guibg=#2d3539
 hi	Search	gui=Bold	guifg=NONE	guibg=#780000
 
-hi	Comment	gui=Italic	guifg=#7f7f7f	guibg=NONE
+hi	Comment	gui=Italic	guifg=#7f7f82	guibg=NONE
 hi	Exception	gui=Bold	guifg=#ef4641	guibg=NONE
 hi	Function	gui=Bold	guifg=#bf6e78	guibg=NONE
 hi!	link	Title	Function
