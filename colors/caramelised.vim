@@ -66,7 +66,6 @@ hi	More	gui=Bold	guifg=#208040	guibg=NONE
 hi	NonText	gui=NONE	guifg=#434F55	guibg=#161A1C
 hi	PreProc	gui=Bold	guifg=#9B869C	guibg=NONE
 hi	Question	gui=NONE	guifg=#208040	guibg=NONE
-hi	shShellVariables	gui=NONE	guifg=#304065	guibg=NONE
 hi	SpecialKey	gui=NONE	guifg=#0000FF	guibg=NONE
 hi	StatusLine	gui=Bold	guifg=Black	guibg=#EBE9ED
 " TODO background is Type foreground
@@ -77,6 +76,9 @@ hi	Visual	gui=reverse	guifg=NONE	guibg=NONE
 hi	link	cIncluded	PreProc
 hi	link	cSpecial	Special
 hi	link	cSpecialCharacter	cSpecial
+
+" Shell variables same as PreProc (no such thing as PreProc in shell)
+hi	link	shShellVariables	PreProc
 
 " HTML overrides
 hi	link	HtmlTag	HtmlTagName
